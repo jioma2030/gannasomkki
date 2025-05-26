@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+ModuleNotFoundError: No module named 'plotly'
+
 
 # Google Drive 파일 다운로드 링크
 url = "https://drive.google.com/uc?export=download&id=1pwfON6doXyH5p7AOBJPfiofYlni0HVVY"
