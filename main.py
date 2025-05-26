@@ -1,9 +1,3 @@
-import subprocess
-
-# gdown 설치
-subprocess.check_call([sys.executable, "-m", "pip", "install", "gdown"])
-
-
 import gdown
 import pandas as pd
 import plotly.express as px
