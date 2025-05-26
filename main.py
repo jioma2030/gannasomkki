@@ -1,5 +1,3 @@
-pip install gdown pandas plotly streamlit
-# app.py
 
 import gdown
 import pandas as pd
