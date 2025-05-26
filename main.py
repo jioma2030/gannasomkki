@@ -1,44 +1,46 @@
-import streamlit as st
+pip install gdown pandas plotly streamlit
+# app.py
+
+import gdown
 import pandas as pd
 import plotly.express as px
+import streamlit as st
 
-git add requirements.txt
-git commit -m "Add plotly to requirements"
-git push
+# Google Drive에서 데이터 다운로드
+def download_data():
+    url = "https://drive.google.com/uc?export=download&id=1pwfON6doXyH5p7AOBJPfiofYlni0HVVY"
+    output = "data.csv"  # 로컬에 저장될 파일명
+    gdown.download(url, output, quiet=False)
+    return output
 
+# 데이터 로드 및 시각화
+def load_and_visualize_data():
+    # 데이터 다운로드
+    data_file = download_data()
+    
+    # 데이터 읽기
+    data = pd.read_csv(data_file)
+    
+    # 데이터프레임 확인
+    st.write("### 데이터 미리보기")
+    st.write(data.head())
 
-# Google Drive 공유 링크로부터 직접 다운로드
-CSV_URL = "https://drive.google.com/uc?export=download&id=1pwfON6doXyH5p7AOBJPfiofYlni0HVVY"
+    # 데이터 컬럼 이름 확인 (여기서 x_column, y_column 변경 필요)
+    st.write("### 데이터 컬럼 이름")
+    st.write(data.columns)
 
-# 캐시된 데이터 로딩 함수
-@st.cache_data
-def load_data():
-    try:
-        df = pd.read_csv(CSV_URL)
-        return df
-    except Exception as e:
-        st.error(f"❌ 데이터 로딩 실패: {e}")
-        return pd.DataFrame()
+    # 시각화 (x, y 컬럼은 실제 데이터에 맞게 변경)
+    fig = px.scatter(data_frame=data, x='x_column', y='y_column', title='Scatter Plot Example')
 
-# 제목
-st.title("📊 Google Drive CSV 시각화 웹앱")
+    # Plotly 그래프를 Streamlit에 표시
+    st.plotly_chart(fig)
 
-# 데이터 불러오기
-df = load_data()
+# Streamlit 앱 실행
+def main():
+    st.title("Plotly와 Streamlit을 활용한 데이터 시각화 웹앱")
 
-# 데이터 확인 및 시각화
-if not df.empty:
-    st.subheader("📋 데이터 미리보기")
-    st.dataframe(df)
+    # 데이터 로드 및 시각화 실행
+    load_and_visualize_data()
 
-    numeric_cols = df.select_dtypes(include='number').columns.tolist()
-    if len(numeric_cols) >= 2:
-        x_col = st.selectbox("X축 선택", numeric_cols)
-        y_col = st.selectbox("Y축 선택", numeric_cols, index=1)
-
-        fig = px.scatter(df, x=x_col, y=y_col, title=f"{x_col} vs {y_col}")
-        st.plotly_chart(fig)
-    else:
-        st.warning("⚠️ 시각화할 수치형 컬럼이 충분하지 않습니다.")
-else:
-    st.error("❌ 데이터를 불러올 수 없습니다. 링크 또는 파일 형식을 확인하세요.")
+if __name__ == "__main__":
+    main()
