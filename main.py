@@ -39,3 +39,6 @@ if not df.empty:
         st.warning("시각화할 숫자형 컬럼이 충분하지 않습니다.")
 else:
     st.error("데이터를 불러올 수 없습니다. 링크를 확인하세요.")
+streamlit
+pandas
+plotly
