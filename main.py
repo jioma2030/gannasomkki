@@ -2,6 +2,11 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+git add requirements.txt
+git commit -m "Add plotly to requirements"
+git push
+
+
 # Google Drive 공유 링크로부터 직접 다운로드
 CSV_URL = "https://drive.google.com/uc?export=download&id=1pwfON6doXyH5p7AOBJPfiofYlni0HVVY"
 
